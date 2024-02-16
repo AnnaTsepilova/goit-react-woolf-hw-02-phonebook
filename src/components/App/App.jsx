@@ -5,26 +5,19 @@ import css from './App.module.css';
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactsList from 'components/ContactsList/ContactsList';
 import Section from 'components/Section/Section';
+import Filter from 'components/Filter/Filter';
 
 class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '0674591256' },
+      { id: 'id-2', name: 'Hermione Kline', number: '0504438912' },
+      { id: 'id-3', name: 'Eden Clements', number: '0736451779' },
+      { id: 'id-4', name: 'Annie Copeland', number: '0932279126' },
+    ],
+    filter: '',
     name: '',
     number: '',
-  };
-
-  addContact = contact => {
-    const isInContacts = this.state.contacts.some(
-      ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
-    );
-
-    if (isInContacts) {
-      alert(`${contact.name} is already in contacts`);
-      return;
-    }
-    this.setState(prevState => ({
-      contacts: [{ id: nanoid(), ...contact }, ...prevState.contacts],
-    }));
   };
 
   formSubmitHandler = data => {
@@ -36,16 +29,25 @@ class App extends Component {
     // );
     // console.log(isContact);
     // if (isContact.length) {
-    //   Notify.warning(`${data.name} is already in contacts`, {
-    //     background: '#eebf31',
-    //     fontSize: '16px',
-    //     width: '350px',
-    //   });
+    //  alert(`${data.name} is already in contacts`);
     //   return;
     // }
     this.setState(prevState => ({
       contacts: [...prevState.contacts, contact],
     }));
+  };
+
+  handleFilter = value => {
+    this.setState(() => ({
+      filter: value,
+    }));
+  };
+
+  getContacts = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
   };
 
   render() {
@@ -56,7 +58,8 @@ class App extends Component {
           <ContactForm onSubmit={this.formSubmitHandler} />
         </Section>
         <Section title="Contacts">
-          <ContactsList contacts={this.state.contacts} />
+          <Filter filterByName={this.handleFilter} />
+          <ContactsList contacts={this.getContacts()} />
         </Section>
       </section>
     );

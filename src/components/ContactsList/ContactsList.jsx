@@ -24,7 +24,9 @@ export default function ContactsList({ contacts, onDelete }) {
           );
         })
       ) : (
-        <span className={css.text}>There is no contact in your phonebook</span>
+        <span className={css.text}>
+          There is no contact in your phonebook. Add your first!
+        </span>
       )}
     </ul>
   );
