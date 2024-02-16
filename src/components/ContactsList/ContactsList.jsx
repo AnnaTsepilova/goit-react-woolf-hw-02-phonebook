@@ -14,9 +14,9 @@ export default function ContactsList({ contacts, onDelete }) {
               <button
                 className={cssButton.deleteButton}
                 type="button"
-                // onClick={() => {
-                //   onDelete(contact.id);
-                // }}
+                onClick={() => {
+                  onDelete(contact.id);
+                }}
               >
                 Delete
               </button>
