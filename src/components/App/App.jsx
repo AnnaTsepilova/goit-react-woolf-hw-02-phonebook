@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import css from './App.module.css';
+import cssText from '../ContactsList/ContactsList.module.css';
 import ContactForm from 'components/ContactForm/ContactForm';
 import ContactsList from 'components/ContactsList/ContactsList';
 import Section from 'components/Section/Section';
@@ -23,8 +24,7 @@ class App extends Component {
   };
 
   formSubmitHandler = data => {
-    let id = nanoid();
-    let contact = { id: id, name: data.name, number: data.number };
+    const contact = { id: nanoid(), ...data };
 
     let isContact = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(data.name.toLowerCase())
@@ -69,10 +69,16 @@ class App extends Component {
         </Section>
         <Section title="Contacts">
           <Filter filterByName={this.handleFilter} />
-          <ContactsList
-            contacts={this.getContacts()}
-            onDelete={this.contactDeleteHandler}
-          />
+          {this.state.contacts.length ? (
+            <ContactsList
+              contacts={this.getContacts()}
+              onDelete={this.contactDeleteHandler}
+            />
+          ) : (
+            <span className={cssText.text}>
+              There is no contact in your phonebook. Add your first!
+            </span>
+          )}
         </Section>
         <ToastContainer />
       </section>
