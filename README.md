@@ -114,4 +114,4 @@ state = {
 
 ### Фінальний результат
 
-![screencapture](./assets/screencapture_1.png)
+![screencapture](./assets/screencapture_2.png)
